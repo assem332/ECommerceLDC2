@@ -1,5 +1,4 @@
 ﻿using ECommerce.Domain.Entities;
-using ECommerce.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,23 +23,20 @@ namespace ECommerce.Infrastructure.Data
                 .Property(oi => oi.UnitPrice)
                 .HasPrecision(18, 2);
 
-            //var superAdminId = Guid.NewGuid();
 
-            var superAdminId = new Guid("11111111-1111-1111-1111-111111111111");
+            modelBuilder.Entity<Customer>()
+                 .HasIndex(u => u.Email)       
+                 .IsUnique();
+        
+                
 
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                Id = superAdminId,
-                FirstName = "Super",
-                LastName = "Admin",
-                Email = "admin@ecommerce.com",
-                PasswordHash = "$2a$11$qG2wXbJwLZg8p1ZxYJc0JeDsd9jI8uWcV5gKpBfU4KqYJzIv7/9s6",
-                Role = UserRole.SuperAdmin
-            });
+           
+
+            
 
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Users { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
@@ -48,7 +44,7 @@ namespace ECommerce.Infrastructure.Data
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
-        public DbSet<Category> categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DbSet<CartItem>  CartItems { get; set; }
 

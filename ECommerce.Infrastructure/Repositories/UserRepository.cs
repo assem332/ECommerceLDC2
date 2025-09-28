@@ -17,21 +17,21 @@ namespace ECommerce.Infrastructure.Repositories
 
 
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<Customer> GetByIdAsync(Guid id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        public async Task<Customer> GetByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
-        public async Task AddAsync(User user) => await _context.Users.AddAsync(user);
+        public async Task AddAsync(Customer user) => await _context.Users.AddAsync(user);
 
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ECommerce.Domain.Entities
 {
     public class CartItem
-    {
+    {   
         public Guid Id { get; set; }
 
         public Guid CartId { get; set; }

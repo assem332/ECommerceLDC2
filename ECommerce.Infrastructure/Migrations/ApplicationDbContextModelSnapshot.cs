@@ -77,6 +77,46 @@ namespace ECommerce.Infrastructure.Migrations
                     b.ToTable("categories");
                 });
 
+            modelBuilder.Entity("ECommerce.Domain.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("ECommerce.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -172,50 +212,9 @@ namespace ECommerce.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ECommerce.Domain.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            Email = "admin@ecommerce.com",
-                            FirstName = "Super",
-                            LastName = "Admin",
-                            PasswordHash = "$2a$11$qG2wXbJwLZg8p1ZxYJc0JeDsd9jI8uWcV5gKpBfU4KqYJzIv7/9s6",
-                            Role = 2
-                        });
-                });
-
             modelBuilder.Entity("ECommerce.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("ECommerce.Domain.Entities.User", "Customer")
+                    b.HasOne("ECommerce.Domain.Entities.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -245,7 +244,7 @@ namespace ECommerce.Infrastructure.Migrations
 
             modelBuilder.Entity("ECommerce.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("ECommerce.Domain.Entities.User", "Customer")
+                    b.HasOne("ECommerce.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,14 +293,14 @@ namespace ECommerce.Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("ECommerce.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("ECommerce.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("ECommerce.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

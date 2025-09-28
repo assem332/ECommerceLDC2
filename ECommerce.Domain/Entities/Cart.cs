@@ -11,8 +11,8 @@ namespace ECommerce.Domain.Entities
         public Guid Id { get; set; }
 
         public Guid CustomerId { get; set; }
-        public User Customer { get; set; }
+        public Customer Customer { get; set; }
 
-        public ICollection<CartItem> Items { get; set; }
+        public ICollection<CartItem> Items { get; set; } = new List<CartItem>();
     }
 }

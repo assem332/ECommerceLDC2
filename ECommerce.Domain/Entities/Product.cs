@@ -27,5 +27,9 @@ namespace ECommerce.Domain.Entities
         
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }

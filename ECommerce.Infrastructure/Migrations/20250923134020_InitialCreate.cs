@@ -6,45 +6,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ECommerce.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Tables : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Product_Category_CategoryId",
-                table: "Product");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Product",
-                table: "Product");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Category",
-                table: "Category");
-
-            migrationBuilder.RenameTable(
-                name: "Product",
-                newName: "Products");
-
-            migrationBuilder.RenameTable(
-                name: "Category",
-                newName: "categories");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Product_CategoryId",
-                table: "Products",
-                newName: "IX_Products_CategoryId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Products",
-                table: "Products",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_categories",
-                table: "categories",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_categories", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -53,13 +30,39 @@ namespace ECommerce.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StockQuantity = table.Column<int>(type: "int", nullable: false),
+                    IsInStock = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,22 +187,21 @@ namespace ECommerce.Infrastructure.Migrations
                 table: "Orders",
                 column: "CustomerId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Products_categories_CategoryId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
                 table: "Products",
-                column: "CategoryId",
-                principalTable: "categories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Products_categories_CategoryId",
-                table: "Products");
-
             migrationBuilder.DropTable(
                 name: "CartItems");
 
@@ -213,46 +215,13 @@ namespace ECommerce.Infrastructure.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Products",
-                table: "Products");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_categories",
-                table: "categories");
-
-            migrationBuilder.RenameTable(
-                name: "Products",
-                newName: "Product");
-
-            migrationBuilder.RenameTable(
-                name: "categories",
-                newName: "Category");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Products_CategoryId",
-                table: "Product",
-                newName: "IX_Product_CategoryId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Product",
-                table: "Product",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Category",
-                table: "Category",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Product_Category_CategoryId",
-                table: "Product",
-                column: "CategoryId",
-                principalTable: "Category",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.DropTable(
+                name: "categories");
         }
     }
 }

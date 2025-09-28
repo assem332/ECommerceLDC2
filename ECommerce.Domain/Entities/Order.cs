@@ -11,12 +11,12 @@ namespace ECommerce.Domain.Entities
         public Guid Id { get; set; }
 
         public Guid CustomerId { get; set; }
-        public User Customer { get; set; }
+        public Customer Customer { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }   
         public string Status { get; set; } 
         public bool IsDeleted { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); 
     }
 }

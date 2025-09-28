@@ -21,5 +21,16 @@ namespace ECommerce.Application.DTOs.Users
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        [Phone(ErrorMessage = "Invalid Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string Address { get; set; }
+
+
+        public bool IsAdmin { get; set; }
+
     }
 }
