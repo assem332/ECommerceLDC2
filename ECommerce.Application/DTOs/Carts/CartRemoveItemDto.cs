@@ -9,8 +9,7 @@ namespace ECommerce.Application.DTOs.Carts
 {
     public class CartRemoveItemDto
     {
-        [Required]
-        public Guid CartId { get; set; }
+        
 
         [Required]
         public Guid ProductId { get; set; }

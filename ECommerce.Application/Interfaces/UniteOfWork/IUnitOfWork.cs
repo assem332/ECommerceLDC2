@@ -17,9 +17,8 @@ namespace ECommerce.Application.Interfaces.UniteOfWork
 
         ICartRepository Carts { get; }
 
+        ICategoryRepository Categories { get; }
         Task<int> CompleteAsync();
-
-
 
     }
 }

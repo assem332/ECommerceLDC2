@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Application.Interfaces.Repositories
 {
-    public interface IOrderRepository
+     public interface IOrderRepository
     {
         Task<Order> GetByIdAsync(Guid id);
-        Task<IEnumerable<Order>> GetByCustomerIdAsync(Guid customerId); 
+        Task<IEnumerable<Order>> GetByCustomerIdAsync(Guid customerId);
         Task AddAsync(Order order);
-        Task SoftDeleteAsync(Guid id); 
+        Task SoftDeleteAsync(Guid id);
     }
 }

@@ -10,10 +10,10 @@ namespace ECommerce.Application.Interfaces.Repositories
     public interface IProductRepository
     {
         Task<Product> GetByIdAsync(Guid id);
-        Task<IEnumerable<Product>> GetAllAsync(); 
-        Task AddAsync(Product product); 
-        Task UpdateAsync(Product product); 
-        Task SoftDeleteAsync(Guid id); 
-        Task RestoreAsync(Guid id); 
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task AddAsync(Product product);
+        Task UpdateAsync(Product product);
+        Task SoftDeleteAsync(Guid id);
+        Task RestoreAsync(Guid id);
     }
 }

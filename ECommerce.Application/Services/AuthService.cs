@@ -1,7 +1,7 @@
 ﻿    using ECommerce.Application.DTOs.Users;
-    using ECommerce.Application.Interfaces.UniteOfWork;
     using ECommerce.Domain.Entities;
     using System;
+    using ECommerce.Application.Interfaces.UniteOfWork; 
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -80,7 +80,7 @@
                     PhoneNumber = user.PhoneNumber,
                     Address = user.Address,
                     IsAdmin = user.IsAdmin
-                };
+                };  
 
                 return (response, token);
             }

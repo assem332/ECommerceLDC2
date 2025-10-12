@@ -27,7 +27,9 @@ namespace ECommerce.Infrastructure.Data
             modelBuilder.Entity<Customer>()
                  .HasIndex(u => u.Email)       
                  .IsUnique();
-        
+
+            modelBuilder.Entity<Order>()
+                .HasQueryFilter(o => !o.IsDeleted);
                 
 
            

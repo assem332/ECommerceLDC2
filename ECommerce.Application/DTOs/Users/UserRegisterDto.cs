@@ -9,7 +9,7 @@ namespace ECommerce.Application.DTOs.Users
 {
     public class UserRegisterDto
     {
-        [Required(ErrorMessage ="First  Error")]
+        [Required(ErrorMessage ="First  Error"),MaxLength(50)]
         public string FirstName {  get; set; }
 
         [Required(ErrorMessage ="Last Error")]
@@ -22,7 +22,7 @@ namespace ECommerce.Application.DTOs.Users
         [Required]
         public string Password { get; set; }
 
-        [Required]
+        [Required,MaxLength(11)]
         [Phone(ErrorMessage = "Invalid Phone Number")]
         public string PhoneNumber { get; set; }
 
